@@ -167,25 +167,31 @@ function loadNews(category = "technology") {
   fetch(`${API_BASE}/news?category=${category}`)
     .then(res => res.json())
     .then(data => {
+      let articles = data;
       if (data && data.error) {
         showError(translateError(data.error));
-        newsContainer.innerHTML = '<div class="error-message">Falha ao carregar notícias.</div>';
-        return;
+        if (Array.isArray(data.fallback)) {
+          articles = data.fallback;
+        } else {
+          newsContainer.innerHTML = '<div class="error-message">Falha ao carregar notícias.</div>';
+          return;
+        }
       }
 
-      if (!Array.isArray(data)) {
+      if (!Array.isArray(articles)) {
         showError('Resposta da API inválida.');
         newsContainer.innerHTML = '<div class="error-message">Falha ao carregar notícias.</div>';
         return;
       }
 
-      const articles = data;
       newsContainer.innerHTML = "";
       
       if (articles.length === 0) {
         newsContainer.innerHTML = '<p class="no-content">Nenhuma notícia encontrada para esta categoria.</p>';
         return;
       }
+      
+      document.dispatchEvent(new CustomEvent('newsLoaded', { detail: articles }));
       
       articles.forEach(article => {
         const card = createNewsCard(article);
