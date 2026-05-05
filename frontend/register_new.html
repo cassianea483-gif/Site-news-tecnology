@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoGlobo | Registrar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .dark body { background: linear-gradient(135deg, #1a1f26 0%, #2d3748 100%); }
+        .register-container { width: 100%; max-width: 420px; }
+        .register-card { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .dark .register-card { background: #2d3748; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .brand { color: #1a5490; font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 12px; }
+        .subtitle { color: #717579; text-align: center; margin-bottom: 32px; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; font-size: 14px; }
+        .dark .form-group label { color: #e8eaed; }
+        .form-group input { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #d1d5db; background: #f9fafb; color: #1a1a1a; font-size: 14px; transition: border-color 0.2s, background-color 0.2s; }
+        .dark .form-group input { background: #3d4859; border-color: rgba(255,255,255,0.1); color: #e8eaed; }
+        .form-group input:focus { outline: none; border-color: #1a5490; background: white; }
+        .dark .form-group input:focus { background: #4a5a72; }
+        .input-with-toggle { position: relative; }
+        .pw-toggle { position: absolute; right: 8px; top: 38px; background: transparent; border: none; cursor: pointer; color: #717579; padding: 8px; display: flex; align-items: center; justify-content: center; }
+        .pw-toggle:hover { color: #1a5490; }
+        .btn-primary { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #1a5490; color: white; font-weight: 600; font-size: 14px; cursor: pointer; transition: background-color 0.2s; margin-top: 8px; }
+        .btn-primary:hover { background: #0f3a66; }
+        .signup { text-align: center; margin-top: 20px; color: #717579; font-size: 14px; }
+        .link { color: #1a5490; text-decoration: none; font-weight: 600; }
+        .link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <h1 class="brand">InfoGlobo</h1>
+            <p class="subtitle">Crie sua conta</p>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Nome Completo</label>
+                    <input type="text" id="register-name" required placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group input-with-toggle">
+                    <label for="register-password">Senha</label>
+                    <input type="password" id="register-password" required placeholder="Crie uma senha">
+                    <button type="button" class="pw-toggle" aria-label="Mostrar senha"><span class="material-symbols-outlined" style="font-size: 20px;">visibility</span></button>
+                </div>
+                <div class="form-group input-with-toggle">
+                    <label for="register-confirm">Confirmar Senha</label>
+                    <input type="password" id="register-confirm" required placeholder="Confirme a senha">
+                    <button type="button" class="pw-toggle" aria-label="Mostrar senha"><span class="material-symbols-outlined" style="font-size: 20px;">visibility</span></button>
+                </div>
+                <button type="submit" class="btn-primary">Criar Conta</button>
+            </form>
+
+            <p class="signup">Já tem conta? <a href="login.html" class="link">Faça login</a></p>
+        </div>
+    </div>
+
+    <script src="theme.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
