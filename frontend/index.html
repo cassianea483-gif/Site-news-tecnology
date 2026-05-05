@@ -8,298 +8,484 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..200&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="style.css">
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #f5f7fa;
-            color: #111827;
-            min-height: 100vh;
-        }
-
-        .dark body {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-
-        nav {
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.96);
-        }
-
-        .dark nav {
-            background: rgba(15, 23, 42, 0.92);
-        }
-
-        aside {
-            overflow-y: auto;
-            background: rgba(249, 250, 251, 0.98);
-            border-right: 1px solid #e5e7eb;
-        }
-
-        .dark aside {
-            background: rgba(15, 23, 42, 0.94);
-            border-right-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .news-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            overflow: hidden;
-            background: #ffffff;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-        }
-
-        .news-card:hover {
-            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-            transform: translateY(-4px);
-        }
-
-        .dark .news-card {
-            border-color: rgba(255, 255, 255, 0.12);
-            background: #111827;
-        }
-
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            font-feature-settings: 'liga';
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        main {
-            max-width: 1320px;
-            margin: 0 auto;
-        }
-
-        .category-nav-btn {
-            transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-        }
-
-        .category-nav-btn:hover,
-        .category-nav-btn:focus-visible {
-            transform: translateY(-1px);
-        }
-
-        .category-nav-btn.active,
-        .category-nav-btn.active:hover {
-            background: #1d4ed8;
-            color: #ffffff;
-            border-color: #1d4ed8;
-        }
-
-        .dark .category-nav-btn {
-            color: #e5e7eb;
-        }
-
-        .dark .category-nav-btn.active {
-            background: #2563eb;
-        }
-
-        .theme-toggle,
-        #login-link,
-        #reg-link,
-        #logout-btn {
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .theme-toggle:hover,
-        #login-link:hover,
-        #reg-link:hover,
-        #logout-btn:hover {
-            transform: translateY(-1px);
-        }
-    </style>
 </head>
 <body>
 
 <!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-gray-200">
-    <div class="flex items-center gap-4">
-        <span class="text-xl font-bold text-blue-900">InfoGlobo</span>
-    </div>
-    <div class="hidden md:flex flex-1 max-w-2xl mx-12">
-        <div class="relative w-full">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">search</span>
-            <input class="w-full bg-gray-50 border border-gray-300 rounded-lg py-2 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-200 transition-all" placeholder="Buscar notícias..." type="text" disabled/>
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-logo">
+            <span class="logo-icon">📰</span>
+            <span class="logo-text">InfoGlobo</span>
         </div>
-    </div>
-    <div class="flex items-center gap-4">
-        <span id="user-info" class="text-gray-600 text-sm hidden"></span>
-        <button class="theme-toggle material-symbols-outlined" aria-label="Alternar tema">dark_mode</button>
-        <a id="login-link" href="login.html" class="material-symbols-outlined text-gray-600 hover:text-blue-600 transition-colors">login</a>
-        <a id="reg-link" href="register.html" class="material-symbols-outlined text-gray-600 hover:text-blue-600 transition-colors">person_add</a>
-        <button id="logout-btn" class="material-symbols-outlined text-gray-600 hover:text-red-600 transition-colors hidden">logout</button>
-        <div class="h-8 w-8 rounded-full border border-gray-300 p-0.5 overflow-hidden">
-            <img class="h-full w-full object-cover rounded-full" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect fill=%22%231a5490%22 width=%2224%22 height=%2224%22/%3E%3C/svg%3E"/>
+        <div class="navbar-search">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input class="search-input" placeholder="Buscar notícias..." type="text" id="search-input"/>
+        </div>
+        <div class="navbar-actions">
+            <span id="user-info" class="user-info"></span>
+            <button class="theme-toggle material-symbols-outlined" aria-label="Alternar tema" title="Alternar tema">dark_mode</button>
+            <a id="login-link" href="login.html" class="nav-link material-symbols-outlined" title="Login">login</a>
+            <a id="reg-link" href="register.html" class="nav-link material-symbols-outlined" title="Registar">person_add</a>
+            <button id="logout-btn" class="nav-link material-symbols-outlined" style="display: none;" title="Logout">logout</button>
         </div>
     </div>
 </nav>
 
 <!-- Side Navigation Bar -->
-<aside class="hidden lg:flex flex-col h-screen fixed left-0 pt-20 pb-6 px-4 bg-gray-50 border-r border-gray-200 w-64 z-40">
-    <div class="mb-8 px-3">
-        <h3 class="font-bold text-sm text-blue-900">Categorias</h3>
-        <p class="text-xs text-gray-600 mt-1">Escolha seu tema</p>
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h3 class="sidebar-title">Categorias</h3>
+        <p class="sidebar-subtitle">Escolha seu tema</p>
     </div>
-    <nav class="flex-1 space-y-1">
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg bg-blue-100 text-blue-900 border-l-4 border-blue-600 font-semibold text-sm transition-colors active-category" data-category="technology" href="#">
-            <span class="material-symbols-outlined text-base">analytics</span>
+    <nav class="sidebar-nav">
+        <button class="category-btn active" data-category="technology">
+            <span class="material-symbols-outlined">computer</span>
             <span>Tecnologia</span>
-        </a>
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors" data-category="business" href="#">
-            <span class="material-symbols-outlined text-base">insights</span>
+        </button>
+        <button class="category-btn" data-category="business">
+            <span class="material-symbols-outlined">trending_up</span>
             <span>Economia</span>
-        </a>
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors" data-category="health" href="#">
-            <span class="material-symbols-outlined text-base">health_and_safety</span>
+        </button>
+        <button class="category-btn" data-category="health">
+            <span class="material-symbols-outlined">favorite</span>
             <span>Saúde</span>
-        </a>
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors" data-category="science" href="#">
-            <span class="material-symbols-outlined text-base">science</span>
+        </button>
+        <button class="category-btn" data-category="science">
+            <span class="material-symbols-outlined">microscope</span>
             <span>Ciência</span>
-        </a>
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors" data-category="entertainment" href="#">
-            <span class="material-symbols-outlined text-base">movie</span>
+        </button>
+        <button class="category-btn" data-category="entertainment">
+            <span class="material-symbols-outlined">theater_comedy</span>
             <span>Entretenimento</span>
-        </a>
-        <a class="category-nav-btn flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors" data-category="sports" href="#">
-            <span class="material-symbols-outlined text-base">sports_soccer</span>
-            <span>Esportes</span>
-        </a>
+        </button>
+        <button class="category-btn" data-category="sports">
+            <span class="material-symbols-outlined">sports_soccer</span>
+            <span>Desportos</span>
+        </button>
     </nav>
-    <div class="mt-auto pt-6 border-t border-gray-300 space-y-3">
-        <a href="favorites.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold text-sm transition-colors">
-            <span class="material-symbols-outlined text-base">favorite</span>
+    <div class="sidebar-footer">
+        <button id="favorites-btn" class="sidebar-link">
+            <span class="material-symbols-outlined">star</span>
             <span>Favoritos</span>
-        </a>
+            <span class="favorites-count" id="favorites-count">0</span>
+        </button>
     </div>
 </aside>
 
 <!-- Main Content -->
-<main class="pt-20 lg:ml-64 px-6 pb-12 min-h-screen">
+<main class="main-content">
     <!-- Hero Section -->
-    <section class="mb-12">
-        <div class="bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg p-8 text-white">
-            <h1 class="text-4xl font-bold mb-3">Notícias em Tempo Real</h1>
-            <p class="text-blue-100 text-lg mb-6">Mantenha-se informado sobre os principais acontecimentos do dia com análises profundas e confiáveis.</p>
-            <button class="px-6 py-3 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-colors">Saiba Mais</button>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Notícias em Tempo Real</h1>
+            <p class="hero-subtitle">Mantenha-se informado sobre os principais acontecimentos do dia com análises profundas e confiáveis.</p>
         </div>
     </section>
 
     <!-- Featured Article -->
-    <section class="mb-12" id="featured-container"></section>
+    <section class="featured-section" id="featured-container"></section>
 
-    <!-- Category Selection -->
-    <section class="mb-8">
-        <div class="flex items-center justify-between mb-6">
+    <!-- Latest News Section -->
+    <section class="news-section">
+        <div class="section-header">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Últimas Notícias</h2>
-                <p class="text-gray-600 text-sm mt-1">Conteúdo atualizado em tempo real</p>
+                <h2 class="section-title" id="section-title">Últimas Notícias</h2>
+                <p class="section-subtitle" id="section-subtitle">Conteúdo atualizado em tempo real</p>
             </div>
         </div>
         
         <!-- Mobile category buttons -->
-        <div class="lg:hidden flex flex-wrap gap-2 mb-6">
-            <button class="category-nav-btn px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold text-sm" data-category="technology">Tecnologia</button>
-            <button class="category-nav-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold text-sm hover:bg-gray-300 transition-colors" data-category="business">Economia</button>
-            <button class="category-nav-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold text-sm hover:bg-gray-300 transition-colors" data-category="health">Saúde</button>
-        </div>
+        <div class="mobile-categories" id="mobile-categories"></div>
     </section>
 
     <!-- News Grid -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-container">
-        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #717579;">
-            <span class="material-symbols-outlined" style="font-size: 48px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">newspaper</span>
-            Carregando notícias...
+    <section class="news-grid" id="news-container">
+        <div class="loading-container">
+            <span class="material-symbols-outlined loading-icon">newspaper</span>
+            <p>Carregando notícias...</p>
         </div>
     </section>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="summary-title" class="modal-title"></h2>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="summary-text" class="modal-summary"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="close-modal-btn">Fechar</button>
+                <a id="read-more-link" href="#" target="_blank" class="btn-primary">Ler Artigo Completo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content favorites-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Meus Favoritos</h2>
+                <button class="modal-close" id="close-favorites-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="favorites-list">
+                <div class="empty-favorites">
+                    <span class="material-symbols-outlined">bookmark_add</span>
+                    <p>Nenhum artigo nos favoritos ainda</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <script src="app.js"></script>
 <script src="theme.js"></script>
 
 <script>
-// Create news card with professional design
-window.createNewsCard = function(article) {
-    const card = document.createElement("article");
-    card.className = "news-card transition-all duration-300 flex flex-col";
-    
-    const imageHtml = article.image 
-        ? `<img src="${article.image}" alt="News" class="w-full h-48 object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Crect fill=%22%23e5e7eb%22 width=%2224%22 height=%2224%22/%3E%3C/svg%3E'">`
-        : '<div style="width: 100%; height: 192px; background: #f3f4f6; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined text-gray-400" style="font-size: 48px;">image_not_supported</span></div>';
-    
-    const description = article.description ? article.description.substring(0, 120) + "..." : "Notícia sem descrição disponível";
-    
-    card.innerHTML = `
-        <div class="relative h-48 overflow-hidden">
-            ${imageHtml}
-        </div>
-        <div class="p-5 flex flex-col flex-1">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-xs text-blue-600 font-bold uppercase tracking-wide">Notícia</span>
-                <span class="text-xs text-gray-500">Agora</span>
-            </div>
-            <h3 class="font-bold text-gray-900 mb-2 line-clamp-2 text-base">${article.title}</h3>
-            <p class="text-gray-600 text-sm line-clamp-2 mb-4">${description}</p>
-            <div class="mt-auto pt-4 border-t border-gray-200 flex gap-2">
-                <a href="${article.url}" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded transition-colors text-center no-underline">Ler mais</a>
-                <button class="flex items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold px-3 py-2 rounded transition-colors" style="border: none; cursor: pointer;">
-                    <span class="material-symbols-outlined text-sm">favorite_border</span>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Category labels
+    const categoryLabels = {
+        'technology': 'Tecnologia',
+        'business': 'Economia',
+        'health': 'Saúde',
+        'science': 'Ciência',
+        'entertainment': 'Entretenimento',
+        'sports': 'Desportos'
+    };
+
+    let currentCategory = 'technology';
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Update favorites count
+    function updateFavoritesCount() {
+        document.getElementById('favorites-count').textContent = favorites.length;
+    }
+
+    // Check if article is favorite
+    function isFavorite(articleUrl) {
+        return favorites.some(fav => fav.url === articleUrl);
+    }
+
+    // Add to favorites
+    function addToFavorites(article) {
+        if (!isFavorite(article.url)) {
+            favorites.push(article);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoritesCount();
+            showNotification('✓ Adicionado aos favoritos');
+        }
+    }
+
+    // Remove from favorites
+    function removeFromFavorites(articleUrl) {
+        favorites = favorites.filter(fav => fav.url !== articleUrl);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesCount();
+        showNotification('✗ Removido dos favoritos');
+    }
+
+    // Show notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
+    // Create news card
+    window.createNewsCard = function(article) {
+        const card = document.createElement("article");
+        card.className = "news-card";
+        const isFav = isFavorite(article.url);
+
+        const imageHtml = article.image 
+            ? `<img src="${article.image}" alt="${article.title}" class="news-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%23e5e7eb%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22Arial%22%3ESem imagem%3C/text%3E%3C/svg%3E'"/>`
+            : '<div class="news-image-placeholder"><span class="material-symbols-outlined">image_not_supported</span></div>';
+
+        const description = article.description 
+            ? article.description.substring(0, 120) + "..." 
+            : "Sem descrição disponível";
+
+        card.innerHTML = `
+            <div class="news-image-container">
+                ${imageHtml}
+                <button class="btn-favorite ${isFav ? 'active' : ''}" data-url="${article.url}" title="${isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+                    <span class="material-symbols-outlined">${isFav ? 'bookmark' : 'bookmark_border'}</span>
                 </button>
             </div>
-        </div>
-    `;
-    return card;
-};
-
-// Render featured article
-window.renderFeaturedArticle = function(article) {
-    const featured = document.getElementById('featured-container');
-    if (!featured || !article) return;
-
-    const featuredHtml = `
-        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <div class="grid md:grid-cols-2 gap-0">
-                <div class="h-64 md:h-auto">
-                    <img src="${article.image || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 400%22%3E%3Crect fill=%23e5e7eb%22 width=%22600%22 height=%22400%22/%3E%3C/svg%3E'}" alt="Featured" class="w-full h-full object-cover"/>
+            <div class="news-content">
+                <div class="news-meta">
+                    <span class="news-category">${article.source || 'Notícia'}</span>
+                    <span class="news-date">Agora</span>
                 </div>
-                <div class="p-8 flex flex-col justify-center">
-                    <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-3 py-1 rounded-lg w-fit mb-4">
-                        <span class="material-symbols-outlined text-base">star</span>
-                        <span class="text-xs font-bold">Destaque</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">${article.title}</h3>
-                    <p class="text-gray-700 mb-6">${article.description || 'Notícia em destaque.'}</p>
-                    <a href="${article.url}" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-fit">Ver notícia</a>
+                <h3 class="news-title">${article.title}</h3>
+                <p class="news-description">${description}</p>
+                <div class="news-actions">
+                    <button class="btn-summary" data-title="${article.title}" data-description="${article.description || 'Sem descrição'}" data-url="${article.url}">
+                        <span class="material-symbols-outlined">summarize</span>
+                        Resumir
+                    </button>
+                    <a href="${article.url}" target="_blank" class="btn-read-more">
+                        <span>Ler Mais</span>
+                        <span class="material-symbols-outlined">arrow_outward</span>
+                    </a>
                 </div>
             </div>
-        </div>
-    `;
-    featured.innerHTML = featuredHtml;
-};
+        `;
 
-// Update featured article on load
-document.addEventListener('newsLoaded', (event) => {
-    const articles = event.detail;
-    if (articles && articles.length > 0) {
-        window.renderFeaturedArticle(articles[0]);
+        // Favorite button
+        const favoriteBtn = card.querySelector('.btn-favorite');
+        favoriteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (isFavorite(article.url)) {
+                removeFromFavorites(article.url);
+                this.classList.remove('active');
+                this.querySelector('span').textContent = 'bookmark_border';
+                this.title = 'Adicionar aos favoritos';
+            } else {
+                addToFavorites(article);
+                this.classList.add('active');
+                this.querySelector('span').textContent = 'bookmark';
+                this.title = 'Remover dos favoritos';
+            }
+        });
+
+        // Summary button
+        card.querySelector('.btn-summary').addEventListener('click', function() {
+            openSummaryModal(
+                this.dataset.title,
+                this.dataset.description,
+                this.dataset.url
+            );
+        });
+
+        return card;
+    };
+
+    // Featured article
+    window.renderFeaturedArticle = function(article) {
+        const featured = document.getElementById('featured-container');
+        if (!featured || !article) return;
+
+        const isFav = isFavorite(article.url);
+
+        const featuredHtml = `
+            <div class="featured-card">
+                <div class="featured-image">
+                    <img src="${article.image || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 400%22%3E%3Crect fill=%23e5e7eb%22 width=%22800%22 height=%22400%22/%3E%3C/svg%3E'}" alt="${article.title}"/>
+                    <button class="btn-favorite featured-favorite ${isFav ? 'active' : ''}" data-url="${article.url}" title="${isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+                        <span class="material-symbols-outlined">${isFav ? 'bookmark' : 'bookmark_border'}</span>
+                    </button>
+                </div>
+                <div class="featured-content">
+                    <div class="featured-badge">
+                        <span class="material-symbols-outlined">star</span>
+                        <span>Destaque</span>
+                    </div>
+                    <h3 class="featured-title">${article.title}</h3>
+                    <p class="featured-description">${article.description || 'Notícia em destaque.'}</p>
+                    <div class="featured-actions">
+                        <button class="btn-summary featured-btn-summary" data-title="${article.title}" data-description="${article.description || 'Sem descrição'}" data-url="${article.url}">
+                            <span class="material-symbols-outlined">summarize</span>
+                            Resumir
+                        </button>
+                        <a href="${article.url}" target="_blank" class="btn-read-more featured-btn-read">
+                            <span>Ver Artigo</span>
+                            <span class="material-symbols-outlined">arrow_outward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        featured.innerHTML = featuredHtml;
+
+        const featuredFavorite = document.querySelector('.featured-favorite');
+        featuredFavorite.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (isFavorite(article.url)) {
+                removeFromFavorites(article.url);
+                this.classList.remove('active');
+                this.querySelector('span').textContent = 'bookmark_border';
+                this.title = 'Adicionar aos favoritos';
+            } else {
+                addToFavorites(article);
+                this.classList.add('active');
+                this.querySelector('span').textContent = 'bookmark';
+                this.title = 'Remover dos favoritos';
+            }
+        });
+
+        document.querySelector('.featured-btn-summary').addEventListener('click', function() {
+            openSummaryModal(
+                this.dataset.title,
+                this.dataset.description,
+                this.dataset.url
+            );
+        });
+    };
+
+    // Filter articles by category
+    window.filterArticlesByCategory = function(category) {
+        currentCategory = category;
+        
+        // Update section title
+        document.getElementById('section-title').textContent = `Notícias de ${categoryLabels[category]}`;
+        document.getElementById('section-subtitle').textContent = `Conteúdo de ${categoryLabels[category]} atualizado em tempo real`;
+
+        // Get all articles from global storage
+        const allArticles = window.allArticles || [];
+        const filtered = allArticles.filter(article => article.category === category);
+
+        // Render filtered articles
+        const newsContainer = document.getElementById('news-container');
+        newsContainer.innerHTML = '';
+
+        if (filtered.length === 0) {
+            newsContainer.innerHTML = `
+                <div class="loading-container">
+                    <span class="material-symbols-outlined loading-icon">search_off</span>
+                    <p>Nenhuma notícia encontrada nesta categoria</p>
+                </div>
+            `;
+            return;
+        }
+
+        filtered.forEach(article => {
+            newsContainer.appendChild(window.createNewsCard(article));
+        });
+    };
+
+    // Render favorites
+    function renderFavorites() {
+        const favoritesList = document.getElementById('favorites-list');
+        
+        if (favorites.length === 0) {
+            favoritesList.innerHTML = `
+                <div class="empty-favorites">
+                    <span class="material-symbols-outlined">bookmark_add</span>
+                    <p>Nenhum artigo nos favoritos ainda</p>
+                </div>
+            `;
+            return;
+        }
+
+        favoritesList.innerHTML = '';
+        const grid = document.createElement('div');
+        grid.className = 'favorites-grid';
+
+        favorites.forEach(article => {
+            grid.appendChild(window.createNewsCard(article));
+        });
+
+        favoritesList.appendChild(grid);
     }
+
+    // Modal functions
+    function openSummaryModal(title, description, url) {
+        document.getElementById('summary-title').textContent = title;
+        document.getElementById('summary-text').textContent = description;
+        document.getElementById('read-more-link').href = url;
+
+        const modal = document.getElementById('summary-modal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSummaryModal() {
+        const modal = document.getElementById('summary-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function closeFavoritesModal() {
+        const modal = document.getElementById('favorites-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Modal events
+    const closeBtn = document.getElementById('close-modal');
+    const closeBtn2 = document.getElementById('close-modal-btn');
+    const modal = document.getElementById('summary-modal');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeSummaryModal);
+    if (closeBtn2) closeBtn2.addEventListener('click', closeSummaryModal);
+
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeSummaryModal();
+        });
+    }
+
+    // Favorites modal events
+    const closeFavBtn = document.getElementById('close-favorites-modal');
+    const favoritesModal = document.getElementById('favorites-modal');
+
+    if (closeFavBtn) closeFavBtn.addEventListener('click', closeFavoritesModal);
+    if (favoritesModal) {
+        favoritesModal.addEventListener('click', function(e) {
+            if (e.target === favoritesModal) closeFavoritesModal();
+        });
+    }
+
+    // Favorites button
+    document.getElementById('favorites-btn').addEventListener('click', function() {
+        renderFavorites();
+        document.getElementById('favorites-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeSummaryModal();
+            closeFavoritesModal();
+        }
+    });
+
+    // Category buttons
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.dataset.category;
+            window.filterArticlesByCategory(category);
+        });
+    });
+
+    // Evento custom para carregar notícias
+    document.addEventListener('newsLoaded', (event) => {
+        const articles = event.detail;
+        if (articles && articles.length > 0) {
+            window.allArticles = articles;
+            window.renderFeaturedArticle(articles[0]);
+            
+            // Filtrar pela categoria padrão
+            window.filterArticlesByCategory('technology');
+        }
+    });
+
+    // Initialize
+    updateFavoritesCount();
+
 });
 </script>
 </body>

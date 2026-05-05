@@ -2,7 +2,8 @@
 // InfoGlobo - Frontend Application
 // ============================================
 
-const API_BASE = "http://localhost:5000";
+const API_BASE_URL = 'http://localhost:5000/api';
+const NEWS_API_KEY = 'sua_chave_api_aqui'; // Substitua pela sua chave NewsAPI
 
 // ============================================
 // STATE MANAGEMENT
@@ -477,3 +478,106 @@ window.addFavoriteFromCard = addFavoriteFromCard;
 window.removeFavorite = removeFavorite;
 window.logout = logout;
 window.loadNews = loadNews;
+
+// Fetch articles from backend API
+async function fetchArticles() {
+    try {
+        console.log('Iniciando busca de notícias...');
+        
+        const response = await fetch(`${API_BASE_URL}/news`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Notícias recebidas:', data);
+
+        // Processar artigos
+        const articles = processArticles(data.articles || data || []);
+        
+        // Disparar evento customizado
+        document.dispatchEvent(new CustomEvent('newsLoaded', { 
+            detail: articles 
+        }));
+
+        return articles;
+
+    } catch (error) {
+        console.error('Erro ao buscar notícias:', error);
+        showErrorMessage('Erro ao carregar notícias. Tente novamente mais tarde.');
+        return [];
+    }
+}
+
+// Process articles from API
+function processArticles(rawArticles) {
+    return rawArticles.map(article => ({
+        title: article.title || 'Título indisponível',
+        description: article.description || article.content || 'Descrição indisponível',
+        url: article.url || '#',
+        image: article.urlToImage || article.image || '',
+        source: article.source?.name || article.source || 'Notícia',
+        category: article.category || getCategoryFromSource(article.source?.name || ''),
+        publishedAt: article.publishedAt || new Date().toISOString(),
+        author: article.author || 'Desconhecido'
+    }));
+}
+
+// Get category based on source
+function getCategoryFromSource(source) {
+    const categoryMap = {
+        'techcrunch': 'technology',
+        'wired': 'technology',
+        'theverge': 'technology',
+        'hacker-news': 'technology',
+        'bbc-news': 'general',
+        'cnn': 'general',
+        'espn': 'sports',
+        'bbc-sport': 'sports',
+        'medical-news-today': 'health',
+        'scientific-american': 'science',
+        'nature': 'science',
+        'business-insider': 'business',
+        'financial-times': 'business',
+        'entertainment-weekly': 'entertainment',
+        'variety': 'entertainment'
+    };
+
+    const sourceKey = source.toLowerCase().replace(/\s+/g, '-');
+    return categoryMap[sourceKey] || 'general';
+}
+
+// Show error message
+function showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    
+    const newsContainer = document.getElementById('news-container');
+    if (newsContainer) {
+        newsContainer.innerHTML = `
+            <div class="loading-container">
+                <span class="material-symbols-outlined" style="font-size: 3rem; color: #ef4444;">error</span>
+                <p>${message}</p>
+            </div>
+        `;
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Página carregada, buscando notícias...');
+    fetchArticles();
+});
+
+// Auto-refresh every 5 minutes
+setInterval(() => {
+    console.log('Atualizando notícias...');
+    fetchArticles();
+}, 5 * 60 * 1000);
